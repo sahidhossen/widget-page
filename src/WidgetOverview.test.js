@@ -47,8 +47,11 @@ test("Open modal with multi-step wizard", () => {
 });
 
 test("Add widget and render widget list ", () => {
+  // Add widget to the widgets list
   widgets.unshift(widget);
+  // Render widgetlists component with widgets
   const { getAllByTestId } = render(<WidgetLists widgets={widgets} />);
   const listItems = getAllByTestId("list-item");
+  // Check if its render or not
   expect(listItems.length).toEqual(1);
 });
