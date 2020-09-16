@@ -6,16 +6,16 @@ import EmptyWidget from "../EmptyWidget";
 const WidgetLists = (props) => {
   const { widgets, onDelete } = props;
 
-  const onDeleteHandler = (index) => {
-    onDelete(index);
+  const onDeleteHandler = (widgetId) => {
+    onDelete(widgetId);
   };
 
   return (
     <div className="widget-lists d-flex">
       {widgets.length === 0 && <EmptyWidget />}
       {widgets.length > 0 &&
-        widgets.map((widget, index) => {
-          return <List widget={widget} index={index} key={index + 1} onDelete={onDeleteHandler} />;
+        widgets.map((widget) => {
+          return <List widget={widget} key={widget.id} onDelete={onDeleteHandler} />;
         })}
     </div>
   );

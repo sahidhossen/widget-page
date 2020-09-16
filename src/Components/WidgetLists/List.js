@@ -2,15 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const List = (props) => {
-  const { index, widget, onDelete } = props;
+  const { widget, onDelete } = props;
 
   /**
    * On delete action call delete method from parent component
-   * @param {number} index
+   * @param {number} widgetId
    */
-  const onDeleteHandler = (index) => (event) => {
+  const onDeleteHandler = (widgetId) => (event) => {
     event.preventDefault();
-    onDelete(index);
+    onDelete(widgetId);
   };
 
   return (
@@ -18,7 +18,7 @@ const List = (props) => {
       <div className="widget-name flex-2">{widget.name}</div>
       <div className="widget-language flex-2">{widget.language}</div>
       <div className="widget-list-action flex-1">
-        <button className="btn btn-danger" onClick={onDeleteHandler(index)}>
+        <button className="btn btn-danger" onClick={onDeleteHandler(widget.id)}>
           Delete
         </button>
       </div>
@@ -27,7 +27,6 @@ const List = (props) => {
 };
 
 List.propTypes = {
-  index: PropTypes.number,
   widget: PropTypes.object,
   onDelete: PropTypes.func,
 };

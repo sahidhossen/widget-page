@@ -9,7 +9,7 @@ import "./css/widget-main.css";
 const WidgetOverview = () => {
   const [open, setOpen] = useState(false);
   let [widgets, addWidget] = useState([]);
-  let [deleteIndex, setDeleteIndex] = useState(null);
+  let [deleteWidgetId, setDeleteWidget] = useState(null);
 
   /**
    * Load data from localstorage when loading component
@@ -27,9 +27,9 @@ const WidgetOverview = () => {
    * @param {object} widget widget object
    */
   const onAddWidget = (widget) => {
-    widgets.unshift(widget);
-    addWidget(widgets);
-    setWidgets(widgets);
+    const newWidgets = [widget, ...widgets];
+    addWidget(newWidgets);
+    setWidgets(newWidgets);
     setOpen(false);
   };
 
@@ -49,11 +49,11 @@ const WidgetOverview = () => {
   };
 
   /**
-   * On delete set widget index number and open alertModal
-   * @param {number} index
+   * On delete set widget widgetId number and open alertModal
+   * @param {number} widgetId
    */
-  const onDeleteHandler = (index) => {
-    setDeleteIndex(index);
+  const onDeleteHandler = (widgetId) => {
+    setDeleteWidget(widgetId);
   };
 
   /**
@@ -63,11 +63,11 @@ const WidgetOverview = () => {
    */
   const onAlertActionHandler = (actionName) => {
     if (actionName === "confirm") {
-      widgets.splice(deleteIndex, 1);
-      addWidget(widgets);
-      setWidgets(widgets);
+      const newWidget = widgets.filter((widget) => widget.id !== deleteWidgetId);
+      addWidget(newWidget);
+      setWidgets(newWidget);
     }
-    setDeleteIndex(null);
+    setDeleteWidget(null);
   };
 
   return (
@@ -88,7 +88,7 @@ const WidgetOverview = () => {
       <Modal open={open}>
         <WidgetModal onClose={onClose} addWidget={onAddWidget} />
       </Modal>
-      <Modal open={deleteIndex !== null}>
+      <Modal open={deleteWidgetId !== null}>
         <AlertModal onAction={onAlertActionHandler} />
       </Modal>
     </div>

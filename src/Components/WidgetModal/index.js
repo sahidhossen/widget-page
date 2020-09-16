@@ -4,6 +4,15 @@ import StepPanel from "./StepPanel";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 
+/**
+ * Generate random ID from datetime
+ */
+const nextNodeId = () => {
+  // let nextId = new Date().getTime();
+  // return nextId++
+  return Math.random().toString(36).substring(2) + Date.now().toString(36);
+};
+
 const WidgetModal = (props) => {
   const { onClose, addWidget } = props;
   const [error, setError] = useState({});
@@ -42,7 +51,7 @@ const WidgetModal = (props) => {
   const addWidgetHandler = (event) => {
     event.preventDefault();
     if (widget.name && widget.name !== "") {
-      addWidget(widget);
+      addWidget({ id: nextNodeId(), ...widget });
     } else {
       setError({ ...error, ["name"]: "Name required for create widget!" });
     }
