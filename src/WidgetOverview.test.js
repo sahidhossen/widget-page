@@ -35,20 +35,20 @@ test("Open modal with multi-step wizard", () => {
 
   // Select first option from select field
   fireEvent.change(screen.getByTestId("language-select"), { target: { value: "english" } });
-  widget.language = "english";
+  widget = { ...widget, language: "english" };
   // Then click on next step
   fireEvent.click(screen.getByText(/Next Step/i));
 
   // then change text field for widget name
   fireEvent.change(screen.getByLabelText("Name"), { target: { value: "English Languge" } });
-  widget.name = "English Language";
+  widget = { ...widget, name: "English Language" };
   // then click on add button to add data to localstorage
   fireEvent.click(screen.getByTestId("add-btn"));
 });
 
 test("Add widget and render widget list ", () => {
   // Add widget to the widgets list
-  widgets.unshift(widget);
+  widgets = [widget, ...widgets];
   // Render widgetlists component with widgets
   const { getAllByTestId } = render(<WidgetLists widgets={widgets} />);
   const listItems = getAllByTestId("list-item");
